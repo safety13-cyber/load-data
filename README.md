@@ -28,13 +28,13 @@ nami-bot2 is a Flask-based web application that allows users to chat with a bot.
     pip install -r requirements.txt
     ```
 
-4. Set your OpenAI API key in [GET.py](http://_vscodecontentref_/1):
+4. Set your OpenAI API key in .py[`GET.py`](GET ):
     ```python
     openai.api_key = 'your-openai-api-key'
     ```
 
 ## Usage
-1. Run the  applicationFlask:
+1. Run the Flask application:
     ```sh
     python GET.py
     ```
@@ -43,72 +43,19 @@ nami-bot2 is a Flask-based web application that allows users to chat with a bot.
 
 3. Type your message in the input box and click "Send" to chat with the bot.
 
-## File Structure
+## GitHub Actions Workflow
+This project includes a GitHub Actions workflow to automate testing and deployment.
+
 ```mermaid
 graph TD;
-    A[nami-bot2] --> B[arongkod.txt]
-    A --> C[GET.py]
-    A --> D[README.md]
-    A --> E[templates]
-    E --> F[index.html]
-```
-This adds a section to your README explaining the GitHub Actions workflow for automating testing and deployment.
-This adds a section to your README explaining the GitHub Actions workflow for automating testing and deployment.
-name: Deploy Flask App
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.8'
-
-    - name: Install dependencies
-      run: |
-        python -m venv venv
-        source venv/bin/activate
-        pip install -r requirements.txt
-
-    - name: Run tests
-      run: |
-        source venv/bin/activate
-        pytest
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.8'
-
-    - name: Install dependencies
-      run: |
-        python -m venv venv
-        source venv/bin/activate
-        pip install -r requirements.txt
-
-    - name: Deploy to Heroku
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: |
-        source venv/bin/activate
-        pip install gunicorn
-        heroku create
-        git push heroku main
+    A[Deploy Flask App] --> B[on: push to main branch]
+    B --> C[build job]
+    C --> D[Checkout code]
+    C --> E[Set up Python 3.8]
+    C --> F[Install dependencies]
+    C --> G[Run tests]
+    B --> H[deploy job]
+    H --> I[Checkout code]
+    H --> J[Set up Python 3.8]
+    H --> K[Install dependencies]
+    H --> L[Deploy to Heroku]
